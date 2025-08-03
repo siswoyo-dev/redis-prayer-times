@@ -1,10 +1,19 @@
 import { getRedisClient } from './_redis.js';
+import { verifyToken } from './verify-token.js';
 
 export async function handler(event) {
     if (event.httpMethod !== 'PUT') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
-
+    
+    // 🔐 Verify JWT
+    const auth = await verifyToken(event);
+    if (!auth.valid) {
+       return {
+         statusCode: 401,
+        body: JSON.stringify({ error: auth.error }),
+       };
+    } 
     const { mosque_id, ...updateData } = JSON.parse(event.body);
     const key = `mosque:${mosque_id}`;
     const client = await getRedisClient();
