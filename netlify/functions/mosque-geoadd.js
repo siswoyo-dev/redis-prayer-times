@@ -1,5 +1,7 @@
 import { getRedisClient } from './_redis.js';
 import { v4 as uuidv4 } from 'uuid';
+import { verifyToken } from './verify-token.js';
+
 
 export default async (req) => {
   if (req.method !== 'POST') {
@@ -9,6 +11,15 @@ export default async (req) => {
     });
   }
 
+  // 🔒 Authenticate
+  const auth = await verifyToken(req);
+  if (!auth.valid) {
+    return new Response(JSON.stringify({ error: auth.error }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  
   try {
     const { mosque_name, address = '', image_url = '', latitude, longitude } = await req.json();
 
