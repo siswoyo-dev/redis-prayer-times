@@ -1,6 +1,9 @@
 <template>
   <div class="nearby-container">
+    <!--header-->
     <h2>Nearby Mosques</h2>
+    <h4>Find your nearest place to pray</h4>
+
     <button @click="getLocation">📍 Find Nearby</button>
 
     <div v-if="loading">Loading nearby mosques...</div>
@@ -11,6 +14,14 @@
         <router-link :to="`/mosque/${mosque.id}`">
           {{ mosque.name }} — {{ mosque.distance.toFixed(2) }} km
         </router-link>
+        &nbsp;|&nbsp;
+        <a
+          :href="`https://www.google.com/maps?q=${mosque.latitude},${mosque.longitude}`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on Map
+        </a>
       </li>
     </ul>
   </div>
