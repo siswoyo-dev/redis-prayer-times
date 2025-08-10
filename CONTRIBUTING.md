@@ -10,7 +10,7 @@ Thanks for helping improve Redis Prayer Times! 🌙
    ```
 2. **Install dependencies**
    ```bash
-   npm install
+   pnpm install
    ```
 3. **Set up Redis** locally or via a hosted service.  
 4. Create a `.env`:
@@ -23,7 +23,7 @@ Thanks for helping improve Redis Prayer Times! 🌙
    ```
 5. **Run tests**
    ```bash
-   npm test
+   pnpm dev
    ```
 
 ## How to Contribute
